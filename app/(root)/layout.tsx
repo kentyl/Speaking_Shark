@@ -1,11 +1,13 @@
 import React from "react";
+import Sidebar from "@/components/sidebar";
+import MobileNavigation from "@/components/MobileNavigation";
 
 const Layout = ({ children }: { children: React.ReactNode }) => {
   return (
     <main className="flex h-screen">
-      Sidebar
+      <Sidebar />
       <section className="flex h-full flex-1 flex-col">
-        MobileNavigation Header
+        <MobileNavigation />
         <div className="main-content">{children}</div>
       </section>
     </main>
