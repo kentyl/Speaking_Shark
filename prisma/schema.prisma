@@ -5,23 +5,58 @@ generator client {
 datasource db {
   provider = "postgresql"
   url=env("POSTGRES_URL")
+  directUrl = env("POSTGRES_URL_NON_POOLING")
 }
 
 model User {
   id  Int @id @default(autoincrement())
 
   fullName String
-  email String
+  email String @unique
   password String
+  role UserRole @default(USER)
+
+  //provider String?
+  //providerId String?
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
 
-model example_cards {
+
+model set_cards {
+  id Int @id @default(autoincrement())
+
+  collection collection[]
+}
+
+
+model collection {
+  id Int @id @default(autoincrement())
+  name String @unique
+  amount Int
+  card card[]
+  set_cards set_cards @relation(fields: [set_cardsID], references: [id])
+  set_cardsID Int
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model card {
   id Int @id @default(autoincrement())
   en_w String
   ru_w String
-  transcription String
-  listen Json
+  transcription String?
+  listen Json?
+  collection collection[]
+  collectionId Int
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+enum UserRole {
+  USER
+  ADMIN
 }
