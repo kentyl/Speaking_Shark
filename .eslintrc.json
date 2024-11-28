@@ -1,3 +1,6 @@
 {
-  "extends": ["next/core-web-vitals", "next/typescript","standart", "plugin:tailwindcss/recommended", "prettier"]
+  "extends": ["next/core-web-vitals", "next/typescript","standart", "plugin:tailwindcss/recommended", "prettier"],
+  "rules": {
+    "@next/next/no-img-element": "off"
+  }
 }

@@ -1,12 +1,16 @@
-export const fetchCollections = async () => {
-  try {
-    const response = await fetch("/api/collections"); // Убедись, что путь совпадает с твоим сервером
-    if (!response.ok) {
-      throw new Error("Ошибка загрузки данных");
-    }
-    return await response.json();
-  } catch (error) {
-    console.error("Ошибка:", error);
-    return [];
-  }
-};
+import { NextRequest, NextResponse } from "next/server";
+import { prisma } from "@/prisma/prisma-client";
+
+export async function GET() {
+  const users = await prisma.user.findMany();
+  return NextResponse.json(users);
+}
+
+export async function POST(req: NextRequest) {
+  const data = await req.json();
+
+  const user = await prisma.user.create({
+    data,
+  });
+  return NextResponse.json(user);
+}
