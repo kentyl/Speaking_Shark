@@ -18,10 +18,8 @@ export default async function CollectionPage({
 
   // Получаем коллекцию вместе с её карточками
   const collection = await prisma.collection.findUnique({
-    where: { id: collectionId },
-    include: {
-      card: true, // Загружаем связанные карточки
-    },
+    where: { id: Number(collectionId) },
+    include: { card: true },
   });
 
   // Если коллекция не найдена, возвращаем 404
