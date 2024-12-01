@@ -1,15 +1,20 @@
 import React from "react";
-import CollectionList from "../../../components/CollectionList";
+import { CollectonsList } from "@/components/shared/collectonsList";
+import { SearchInput } from "@/components/shared/search-input";
+import { prisma } from "@/prisma/prisma-client";
 
-const CollectionsPage = () => {
+export default async function CollectionsPage() {
+  const collections = await prisma.collection.findMany({
+    include: { card: true },
+  });
   return (
     <div>
-      <div className="flex-center h-screen">
-        <h1 className={"h1"}>cards</h1>
+      <div className="mx-10 flex-1">
+        <SearchInput />
       </div>
-      <CollectionList />
+      <div className="ml-5 mt-4 h-screen">
+        <CollectonsList title="Карточки" items={collections} />
+      </div>
     </div>
   );
-};
-
-export default CollectionsPage;
+}
