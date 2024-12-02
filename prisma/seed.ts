@@ -28,7 +28,7 @@ async function up() {
     data: {
       name: "1 theme",
       card: {
-        connect: card.slice(1, 15),
+        connect: card.slice(0, 15),
       },
     },
   });
@@ -37,7 +37,7 @@ async function up() {
     data: {
       name: "2 theme",
       card: {
-        connect: card.slice(16, 18),
+        connect: card.slice(15, 18),
       },
     },
   });
@@ -46,7 +46,7 @@ async function up() {
     data: {
       name: "3 theme",
       card: {
-        connect: card.slice(18, 19),
+        connect: card.slice(18, 21),
       },
     },
   });
