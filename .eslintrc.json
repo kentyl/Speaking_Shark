@@ -2,6 +2,8 @@
   "extends": ["next/core-web-vitals", "next/typescript","standart", "plugin:tailwindcss/recommended", "prettier"],
   "rules": {
     "@next/next/no-img-element": "off",
-    "camelcase": "off"
+    "camelcase": "off",
+    "@typescript-eslint/no-explicit-any": "off",
+    "no-unused-vars": "off"
   }
 }

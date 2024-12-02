@@ -3,11 +3,12 @@ import { notFound } from "next/navigation";
 import { CardsList } from "@/components/shared/CardsList";
 import React from "react";
 
-export default async function CollectionPage({
-  params,
-}: {
-  params: { id: string };
-}) {
+export default async function CollectionPage(
+  props: {
+    params: Promise<{ id: string }>;
+  }
+) {
+  const params = await props.params;
   // Преобразуем ID из строки в число
   const collectionId = Number(params.id);
 
@@ -18,8 +19,10 @@ export default async function CollectionPage({
 
   // Получаем коллекцию вместе с её карточками
   const collection = await prisma.collection.findUnique({
-    where: { id: Number(collectionId) },
-    include: { card: true },
+    where: { id: collectionId },
+    include: {
+      card: true, // Загружаем связанные карточки
+    },
   });
 
   // Если коллекция не найдена, возвращаем 404
