@@ -1,18 +1,18 @@
-import React from "react"; // React необходим для использования createElement
+import React from "react";
 import { prisma, closePrismaConnection } from "@/prisma/prisma-client";
 import { notFound } from "next/navigation";
 import { CardsList } from "@/components/shared/CardsList";
 
 interface CollectionPageProps {
-  params: {
-    id: string;
-  };
+  params: Promise<{ id: string }>;
 }
 
 export default async function CollectionPage({
   params,
 }: CollectionPageProps): Promise<React.ReactElement | null> {
-  const collectionId = Number(params.id);
+  const resolvedParams = await params; // Разворачиваем Promise
+
+  const collectionId = Number(resolvedParams.id);
 
   if (isNaN(collectionId)) {
     notFound();
