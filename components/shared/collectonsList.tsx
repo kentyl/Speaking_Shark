@@ -9,7 +9,7 @@ interface Props {
   className?: string;
 }
 
-export const CollectonsList: React.FC<Props> = ({
+export const CollectionsList: React.FC<Props> = ({
   title,
   items,
   className,
