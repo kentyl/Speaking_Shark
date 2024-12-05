@@ -3,14 +3,20 @@ import { prisma, closePrismaConnection } from "@/prisma/prisma-client";
 import { notFound } from "next/navigation";
 import { CardsList } from "@/components/shared/CardsList";
 
-export default async function CollectionPage(props: {
-  params: { id: string };
-}): Promise<React.ReactElement> {
-  const params = props.params;
+interface CollectionPageProps {
+  params: {
+    id: string;
+  };
+}
+
+export default async function CollectionPage({
+  params,
+}: CollectionPageProps): Promise<React.ReactElement | null> {
   const collectionId = Number(params.id);
 
   if (isNaN(collectionId)) {
-    return notFound();
+    notFound();
+    return null; // Добавляем возврат null для строгой типизации
   }
 
   const collection = await prisma.collection.findUnique({
@@ -22,7 +28,8 @@ export default async function CollectionPage(props: {
   await closePrismaConnection();
 
   if (!collection) {
-    return notFound();
+    notFound();
+    return null; // Возврат null вместо React-элемента
   }
 
   // Возвращаем элементы через React.createElement
