@@ -6,7 +6,7 @@ import { CardsList } from "@/components/shared/CardsList";
 export default async function CollectionPage(props: {
   params: { id: string };
 }): Promise<React.ReactElement> {
-  const params = await props.params;
+  const params = props.params;
   const collectionId = Number(params.id);
 
   if (isNaN(collectionId)) {
