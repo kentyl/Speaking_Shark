@@ -1,5 +1,4 @@
 import React from "react";
-import { Title } from "../title";
 
 interface Props {
   id: number;
@@ -11,23 +10,24 @@ interface Props {
 export const Card: React.FC<Props> = ({ id, en_w, ru_w, className }) => {
   return (
     <div
-      className={`aspect-[3/4] rounded-lg border bg-teal-50 p-6 shadow-md transition-shadow hover:shadow-lg sm:p-8 ${className}`}
+      className={`relative flex aspect-[3/4.5] rounded-lg border bg-teal-50 p-6 shadow-md transition-shadow hover:shadow-lg sm:p-8 ${className}`}
     >
-      <div className="cursor-pointer">
-        {/* Заголовок */}
-        <Title
-          text={`${id}`}
-          size="lg"
-          className="text-xl font-bold text-teal-700"
-        />
+      {/* Номер карточки */}
+      <div className="absolute left-2 top-2 text-xs font-bold text-teal-700 sm:text-sm">
+        {id}
+      </div>
 
+      <div className="w-full cursor-pointer overflow-hidden">
         {/* Содержимое карточки */}
-        <div className="mt-4 text-center">
-          <p className="text-lg font-semibold text-gray-800">
-            <span className="text-teal-600">EN:</span> {en_w}
+        <div className="flex h-full flex-col justify-center gap-2 text-center">
+          {/* Английское слово */}
+          <p className="overflow-hidden break-words text-base font-semibold text-gray-800 sm:text-lg">
+            <span className="font-bold text-teal-600">EN:</span> {en_w}
           </p>
-          <p className="text-lg font-semibold text-gray-800">
-            <span className="text-teal-600">RU:</span> {ru_w}
+
+          {/* Русское слово — скрыто на маленьких устройствах */}
+          <p className="hidden overflow-hidden break-words text-base font-semibold text-gray-800 sm:block sm:text-lg">
+            <span className="font-bold text-teal-600">RU:</span> {ru_w}
           </p>
         </div>
       </div>

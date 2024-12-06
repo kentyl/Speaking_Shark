@@ -19,16 +19,21 @@ const MobileNavigation = () => {
   const pathname = usePathname();
 
   return (
-    <header className="mobile-header">
-      <Link href="/" className="cursor-pointer">
+    <header className="mobile-header flex items-center">
+      <Link href="/" className="relative size-16 cursor-pointer">
         <Image
-          src="/assets/img/logo_description.png"
+          src="/assets/img/logo.png"
           alt="logo"
-          width={185}
-          height={42}
-          className="h-auto"
+          fill
+          className="object-contain"
         />
       </Link>
+
+      {/* Текст */}
+      <p className="flex-1 text-center text-lg font-semibold italic text-cyan-600">
+        Speaking Shark - learn with us!
+      </p>
+
       <Sheet open={open} onOpenChange={setOpen}>
         <SheetTrigger>
           <Image

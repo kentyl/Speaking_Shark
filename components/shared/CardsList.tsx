@@ -49,7 +49,7 @@ export const CardsList: React.FC<Props> = ({ title, items, className }) => {
       </button>
       <div
         className={cn(
-          "grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-[50px]",
+          "grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-[40px]",
         )}
       >
         {items.map((card) => (
