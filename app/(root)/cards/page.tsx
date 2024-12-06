@@ -1,32 +1,20 @@
-import React from "react"; // React необходим даже без JSX
+import React from "react";
 import { CollectionsList } from "@/components/shared/collectonsList";
 import { SearchInput } from "@/components/shared/search-input";
-import { prisma, closePrismaConnection } from "@/prisma/prisma-client";
+import { prisma } from "@/prisma/prisma-client";
 
-export default async function CollectionsPage(): Promise<React.ReactElement> {
+export default async function CollectionsPage() {
   const collections = await prisma.collection.findMany({
     include: { card: true },
   });
-
-  // Закрываем соединение после завершения
-  await closePrismaConnection();
-
-  // Создаем элементы вручную с помощью React.createElement
-  return React.createElement(
-    "div",
-    null,
-    React.createElement(
-      "div",
-      { className: "mx-10 flex-1" },
-      React.createElement(SearchInput, null),
-    ),
-    React.createElement(
-      "div",
-      { className: "ml-5 mt-4 h-screen" },
-      React.createElement(CollectionsList, {
-        title: "Карточки",
-        items: collections,
-      }),
-    ),
+  return (
+    <div>
+      <div className="mx-10 flex-1">
+        <SearchInput />
+      </div>
+      <div className="ml-5 mt-4 h-screen">
+        <CollectionsList title="Карточки" items={collections} />
+      </div>
+    </div>
   );
 }

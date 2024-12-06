@@ -44,9 +44,9 @@ const Chat: React.FC = () => {
   };
 
   return (
-    <div className="flex size-full flex-col rounded-lg bg-gray-300 shadow-lg">
+    <div className="flex h-full flex-col rounded-lg bg-gray-300 shadow-lg">
       {/* История чата */}
-      <div className="flex-1 overflow-y-auto p-4">
+      <div className="flex-1 overflow-y-auto p-4 sm:p-6 lg:p-8">
         {chatHistory.map((msg, index) => (
           <div
             key={index}
@@ -101,12 +101,12 @@ const Chat: React.FC = () => {
           onChange={(e) => setMessage(e.target.value)}
           onKeyDown={handleKeyDown} // Добавлено событие для отправки при Enter
           placeholder="Спросите о чём-либо..."
-          className="flex-1 rounded-full border p-3 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="flex-1 rounded-full border p-3 text-sm shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
         />
         <button
           onClick={sendMessage}
           disabled={isLoading}
-          className={`ml-3 flex size-12 items-center justify-center rounded-full bg-blue-500 text-white ${
+          className={`ml-3 flex size-10 items-center justify-center rounded-full bg-blue-500 text-white ${
             isLoading ? "cursor-not-allowed bg-blue-300" : "hover:bg-blue-600"
           }`}
         >

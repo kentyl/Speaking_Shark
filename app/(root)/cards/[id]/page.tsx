@@ -1,44 +1,37 @@
-import React from "react";
-import { prisma, closePrismaConnection } from "@/prisma/prisma-client";
+import { prisma } from "@/prisma/prisma-client";
 import { notFound } from "next/navigation";
 import { CardsList } from "@/components/shared/CardsList";
+import React from "react";
 
-interface CollectionPageProps {
+export default async function CollectionPage(props: {
   params: Promise<{ id: string }>;
-}
+}) {
+  const params = await props.params;
+  // Преобразуем ID из строки в число
+  const collectionId = Number(params.id);
 
-export default async function CollectionPage({
-  params,
-}: CollectionPageProps): Promise<React.ReactElement | null> {
-  const resolvedParams = await params; // Разворачиваем Promise
-
-  const collectionId = Number(resolvedParams.id);
-
+  // Если ID невалидный, возвращаем 404
   if (isNaN(collectionId)) {
-    notFound();
-    return null; // Добавляем возврат null для строгой типизации
+    return notFound();
   }
 
+  // Получаем коллекцию вместе с её карточками
   const collection = await prisma.collection.findUnique({
     where: { id: collectionId },
-    include: { card: true },
+    include: {
+      card: true, // Загружаем связанные карточки
+    },
   });
 
-  // Закрываем соединение после завершения
-  await closePrismaConnection();
-
+  // Если коллекция не найдена, возвращаем 404
   if (!collection) {
-    notFound();
-    return null; // Возврат null вместо React-элемента
+    return notFound();
   }
 
-  // Возвращаем элементы через React.createElement
-  return React.createElement(
-    "div",
-    { className: "ml-5 h-screen" },
-    React.createElement(CardsList, {
-      title: collection.name,
-      items: collection.card,
-    }),
+  // Рендерим страницу с компонентом CardsList
+  return (
+    <div className="ml-5 h-screen">
+      <CardsList title={collection.name} items={collection.card} />
+    </div>
   );
 }

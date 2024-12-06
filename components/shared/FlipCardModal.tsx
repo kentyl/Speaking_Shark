@@ -29,7 +29,7 @@ const FlipCardModal: React.FC<FlipCardModalProps> = ({
   const handleFlip = () => setIsFlipped(!isFlipped);
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 p-12 sm:p-10 md:p-8 lg:p-6 xl:p-4 2xl:p-2">
       <div className="relative h-96 w-80 rounded-lg bg-white shadow-lg transition-transform duration-500">
         {/* Карточка */}
         <div
@@ -65,7 +65,7 @@ const FlipCardModal: React.FC<FlipCardModalProps> = ({
         {hasPrev && (
           <button
             onClick={onPrev}
-            className="absolute left-[-33px] top-0 flex h-full w-10 items-center justify-center rounded-l-2xl bg-gray-600 text-white shadow-md transition-colors hover:bg-gray-400"
+            className="absolute left-[-33px] top-0 flex h-full w-10 items-center justify-center rounded-l-2xl bg-gray-600 text-white shadow-md transition-colors active:bg-gray-400"
           >
             ←
           </button>
@@ -73,7 +73,7 @@ const FlipCardModal: React.FC<FlipCardModalProps> = ({
         {hasNext && (
           <button
             onClick={onNext}
-            className="absolute right-[-33px] top-0 flex h-full w-10 items-center justify-center rounded-r-2xl bg-gray-600 text-white shadow-md transition-colors hover:bg-gray-400"
+            className="absolute right-[-33px] top-0 flex h-full w-10 items-center justify-center rounded-r-2xl bg-gray-600 text-white shadow-md transition-colors active:bg-gray-400"
           >
             →
           </button>
