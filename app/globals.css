@@ -450,6 +450,7 @@
   .thumbnail-image {
     @apply size-full object-cover object-center !important;
   }
+
 }
 
 @layer base {

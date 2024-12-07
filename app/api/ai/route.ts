@@ -2,12 +2,12 @@ import { NextRequest, NextResponse } from "next/server";
 import { OpenAI } from "openai";
 
 const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY!, // Убедитесь, что переменная окружения настроена
+  apiKey: process.env.OPENAI_API_KEY!,
 });
 
 export async function POST(req: NextRequest) {
   try {
-    const { message } = await req.json();
+    const { message, chatHistory } = await req.json();
 
     if (!message) {
       return NextResponse.json(
@@ -16,10 +16,16 @@ export async function POST(req: NextRequest) {
       );
     }
 
+    // Формируем массив сообщений для отправки в OpenAI
+    const messages = [
+      ...chatHistory, // Передаем предыдущую переписку
+      { role: "user", content: message }, // Добавляем текущее сообщение
+    ];
+
     const chatCompletion = await openai.chat.completions.create({
-      model: "gpt-3.5-turbo", // Или 'gpt-4'
-      messages: [{ role: "user", content: message }],
-      max_tokens: 150,
+      model: "gpt-4o-mini",
+      messages: messages,
+      max_tokens: 1000, // Лимит токенов для ответа
     });
 
     const gptMessage =

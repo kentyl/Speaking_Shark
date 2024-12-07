@@ -2,7 +2,6 @@
 
 import React, { useState } from "react";
 import axios from "axios";
-import Image from "next/image";
 
 const Chat: React.FC = () => {
   const [message, setMessage] = useState<string>("");
@@ -14,20 +13,29 @@ const Chat: React.FC = () => {
   const sendMessage = async () => {
     if (!message.trim()) return;
 
-    setChatHistory([...chatHistory, { role: "user", content: message }]);
+    // Добавляем текущее сообщение пользователя в историю перед отправкой
+    const updatedChatHistory = [
+      ...chatHistory,
+      { role: "user", content: message },
+    ];
+
+    setChatHistory(updatedChatHistory);
     setIsLoading(true);
 
     try {
-      const { data } = await axios.post("/api/ai", { message });
+      const { data } = await axios.post("/api/ai", {
+        message,
+        chatHistory: updatedChatHistory,
+      });
+
       setChatHistory([
-        ...chatHistory,
-        { role: "user", content: message },
+        ...updatedChatHistory,
         { role: "assistant", content: data.response },
       ]);
     } catch (error) {
       console.error("Error sending message:", error);
       setChatHistory([
-        ...chatHistory,
+        ...updatedChatHistory,
         { role: "assistant", content: "Error: Unable to get response." },
       ]);
     } finally {
@@ -38,7 +46,7 @@ const Chat: React.FC = () => {
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
-      e.preventDefault(); // Предотвращаем перенос строки
+      e.preventDefault();
       sendMessage();
     }
   };
@@ -72,38 +80,14 @@ const Chat: React.FC = () => {
       </div>
       {/* Поле ввода */}
       <div className="flex items-center p-4">
-        <div className="mr-2 flex items-center justify-center">
-          <input
-            type="file"
-            id="file-upload"
-            className="hidden"
-            onChange={(e) => {
-              if (e.target.files && e.target.files[0]) {
-                console.log("File uploaded:", e.target.files[0]);
-              }
-            }}
-          />
-          <label
-            htmlFor="file-upload"
-            className="cursor-pointer rounded-full p-1 hover:bg-gray-100"
-          >
-            <Image
-              width={40}
-              height={40}
-              src={"/assets/img/paperclip.png"}
-              alt={"files upload"}
-            />
-          </label>
-        </div>
         <input
           type="text"
           value={message}
           onChange={(e) => setMessage(e.target.value)}
-          onKeyDown={handleKeyDown} // Добавлено событие для отправки при Enter
-          placeholder="Спросите о чём-либо..."
+          onKeyDown={handleKeyDown}
+          placeholder="Введите сообщение..."
           className="w-full flex-1 rounded-full border p-3 text-sm shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 sm:w-auto"
         />
-
         <button
           onClick={sendMessage}
           disabled={isLoading}
