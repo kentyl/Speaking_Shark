@@ -72,7 +72,7 @@ const Chat: React.FC = () => {
       </div>
       {/* Поле ввода */}
       <div className="flex items-center p-4">
-        <div className="size-13 mr-2 flex items-center justify-center">
+        <div className="mr-2 flex items-center justify-center">
           <input
             type="file"
             id="file-upload"
