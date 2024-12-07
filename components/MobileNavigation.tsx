@@ -19,7 +19,7 @@ const MobileNavigation = () => {
   const pathname = usePathname();
 
   return (
-    <header className="mobile-header flex items-center">
+    <header className="mobile-header mr-0 flex items-center">
       <Link href="/" className="relative size-16 cursor-pointer">
         <Image
           src="/assets/img/logo.png"
