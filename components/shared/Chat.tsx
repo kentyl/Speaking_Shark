@@ -101,8 +101,9 @@ const Chat: React.FC = () => {
           onChange={(e) => setMessage(e.target.value)}
           onKeyDown={handleKeyDown} // Добавлено событие для отправки при Enter
           placeholder="Спросите о чём-либо..."
-          className="flex-1 rounded-full border p-3 text-sm shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="w-full flex-1 rounded-full border p-3 text-sm shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 sm:w-auto"
         />
+
         <button
           onClick={sendMessage}
           disabled={isLoading}
