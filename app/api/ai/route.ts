@@ -7,7 +7,7 @@ const openai = new OpenAI({
 
 export async function POST(req: NextRequest) {
   try {
-    const { message, chatHistory } = await req.json();
+    const { message, chatHistory, model } = await req.json();
 
     if (!message) {
       return NextResponse.json(
@@ -16,15 +16,12 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    // Формируем массив сообщений для отправки в OpenAI
-    const messages = [
-      ...chatHistory, // Передаем предыдущую переписку
-      { role: "user", content: message }, // Добавляем текущее сообщение
-    ];
-
     const chatCompletion = await openai.chat.completions.create({
-      model: "gpt-4o-mini",
-      messages: messages,
+      model: model || "gpt-3.5-turbo", // Используем переданную модель или по умолчанию gpt-3.5-turbo
+      messages: [
+        ...chatHistory, // Отправляем последние 3 сообщения из истории
+        { role: "user", content: message },
+      ],
       max_tokens: 1000, // Лимит токенов для ответа
     });
 

@@ -8,24 +8,42 @@ const Chat: React.FC = () => {
   const [chatHistory, setChatHistory] = useState<
     { role: string; content: string }[]
   >([]);
+  const [isHistoryEnabled, setIsHistoryEnabled] = useState<boolean>(false);
+  const [model, setModel] = useState<string>("gpt-3.5-turbo"); // Модель по умолчанию
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const sendMessage = async () => {
     if (!message.trim()) return;
 
-    // Добавляем текущее сообщение пользователя в историю перед отправкой
+    // Очистка поля ввода сразу после отправки
+    const currentMessage = message;
+    setMessage("");
+
+    // Обработка специальных команд
+    if (currentMessage === "save history") {
+      setIsHistoryEnabled(true); // Включаем отправку истории
+      return;
+    }
+
+    if (currentMessage === "to 4o") {
+      setModel("gpt-4o-mini"); // Переключаемся на gpt-4o-mini
+      return;
+    }
+
+    // Обновляем историю сообщений
     const updatedChatHistory = [
       ...chatHistory,
-      { role: "user", content: message },
-    ];
+      { role: "user", content: currentMessage },
+    ].slice(-3); // Ограничиваем последние 3 сообщения
 
     setChatHistory(updatedChatHistory);
     setIsLoading(true);
 
     try {
       const { data } = await axios.post("/api/ai", {
-        message,
-        chatHistory: updatedChatHistory,
+        message: currentMessage,
+        chatHistory: isHistoryEnabled ? updatedChatHistory : [], // Отправляем историю только если включена
+        model, // Передаем текущую модель
       });
 
       setChatHistory([
@@ -40,7 +58,6 @@ const Chat: React.FC = () => {
       ]);
     } finally {
       setIsLoading(false);
-      setMessage("");
     }
   };
 
@@ -53,6 +70,14 @@ const Chat: React.FC = () => {
 
   return (
     <div className="flex h-full flex-col rounded-lg bg-gray-300 shadow-lg">
+      {/* Информация о модели и истории */}
+      <div className="p-4 text-center text-sm font-medium text-gray-700">
+        <div>Используемая модель: {model}</div>
+        {isHistoryEnabled && (
+          <div className="text-sm text-gray-700">История активна</div>
+        )}
+      </div>
+
       {/* История чата */}
       <div className="flex-1 overflow-y-auto p-4 sm:p-6 lg:p-8">
         {chatHistory.map((msg, index) => (
@@ -75,9 +100,12 @@ const Chat: React.FC = () => {
           </div>
         ))}
         {isLoading && (
-          <div className="mb-4 text-center text-gray-500">Загрузка...</div>
+          <div className="mb-4 text-center text-gray-500">
+            Загрузка, подождите...
+          </div>
         )}
       </div>
+
       {/* Поле ввода */}
       <div className="flex items-center p-4">
         <input
