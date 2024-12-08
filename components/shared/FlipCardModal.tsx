@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 interface FlipCardModalProps {
   enWord: string;
@@ -26,6 +26,11 @@ const FlipCardModal: React.FC<FlipCardModalProps> = ({
 }) => {
   const [isFlipped, setIsFlipped] = useState(false);
 
+  // Сбрасываем состояние `isFlipped` при изменении индекса текущей карточки
+  useEffect(() => {
+    setIsFlipped(false); // Всегда открываем карточку английской стороной
+  }, [currentIndex]);
+
   const handleFlip = () => setIsFlipped(!isFlipped);
 
   return (
@@ -33,27 +38,27 @@ const FlipCardModal: React.FC<FlipCardModalProps> = ({
       <div className="relative h-96 w-80 rounded-lg bg-white shadow-lg transition-transform duration-500">
         {/* Карточка */}
         <div
-          className={`relative size-full rounded-lg bg-white shadow-lg transition-transform duration-500${
+          className={`relative size-full rounded-lg bg-white shadow-lg transition-transform duration-500 ${
             isFlipped ? "rotate-y-180" : ""
           }`}
           onClick={handleFlip}
         >
-          {/* Лицевая сторона */}
+          {/* Лицевая сторона (enWord) */}
           <div
-            className={`absolute flex size-full items-center justify-center rounded-lg bg-sky-600 text-2xl font-bold text-white ${
+            className={`absolute flex size-full items-center justify-center rounded-lg bg-sky-600 p-4 text-center text-2xl font-bold text-white ${
               isFlipped ? "hidden" : "block"
             }`}
           >
-            {enWord}
+            <p className="break-words">{enWord}</p>
           </div>
 
-          {/* Обратная сторона */}
+          {/* Обратная сторона (ruWord) */}
           <div
-            className={`absolute flex size-full items-center justify-center rounded-lg bg-sky-800 text-2xl font-bold text-white ${
+            className={`absolute flex size-full items-center justify-center rounded-lg bg-sky-800 p-4 text-center text-2xl font-bold text-white ${
               isFlipped ? "block" : "hidden"
             }`}
           >
-            {ruWord}
+            <p className="break-words">{ruWord}</p>
           </div>
         </div>
 
@@ -64,7 +69,10 @@ const FlipCardModal: React.FC<FlipCardModalProps> = ({
         {/* Кнопки листания */}
         {hasPrev && (
           <button
-            onClick={onPrev}
+            onClick={() => {
+              setIsFlipped(false); // Сброс перед переключением
+              onPrev();
+            }}
             className="absolute left-[-33px] top-0 flex h-full w-10 items-center justify-center rounded-l-2xl bg-gray-600 text-white shadow-md transition-colors active:bg-gray-400"
           >
             ←
@@ -72,7 +80,10 @@ const FlipCardModal: React.FC<FlipCardModalProps> = ({
         )}
         {hasNext && (
           <button
-            onClick={onNext}
+            onClick={() => {
+              setIsFlipped(false); // Сброс перед переключением
+              onNext();
+            }}
             className="absolute right-[-33px] top-0 flex h-full w-10 items-center justify-center rounded-r-2xl bg-gray-600 text-white shadow-md transition-colors active:bg-gray-400"
           >
             →
