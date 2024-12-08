@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from "react";
-import { Title } from "@/components/title";
+import { Title } from "@/components/shared/title";
 import { cn } from "@/lib/utils";
 import { Card } from "@/components/shared/card";
 import FlipCardModal from "@/components/shared/FlipCardModal"; // Импортируем модальное окно

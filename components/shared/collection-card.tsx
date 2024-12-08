@@ -1,6 +1,6 @@
 import React from "react";
 import Link from "next/link";
-import { Title } from "../title";
+import { Title } from "./title";
 
 interface Props {
   id: number;
@@ -18,7 +18,8 @@ export const CollectionCard: React.FC<Props> = ({ id, name, className }) => {
             <Title
               text={name}
               size="sm"
-              className="flex flex-col justify-end break-words text-center font-bold"
+              className="flex flex-col justify-end
+             whitespace-normal break-all text-center text-sm font-bold sm:text-sm md:text-base lg:text-lg xl:text-xl 2xl:text-xl"
             />
           </div>
         </div>

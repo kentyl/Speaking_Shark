@@ -8,11 +8,7 @@ declare global {
 }
 
 // Создаем клиент Prisma
-export const prisma: PrismaClient =
-  global.prisma ??
-  new PrismaClient({
-    log: ["query", "info", "warn", "error"], // Логирование запросов для отладки
-  });
+export const prisma: PrismaClient = global.prisma ?? new PrismaClient({});
 
 // Сохраняем клиент в глобальной переменной в режиме разработки
 if (process.env.NODE_ENV !== "production") {

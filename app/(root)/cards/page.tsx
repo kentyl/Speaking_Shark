@@ -1,19 +1,33 @@
 import React from "react";
-import { CollectionsList } from "@/components/shared/collectonsList";
-import { SearchInput } from "@/components/shared/search-input";
+import { CollectionsList, SearchInput, TopBar } from "@/components/shared";
 import { prisma } from "@/prisma/prisma-client";
 
 export default async function CollectionsPage() {
-  const collections = await prisma.collection.findMany({
-    include: { card: true },
+  const categories = await prisma.category.findMany({
+    include: { collections: true },
   });
   return (
     <div>
       <div className="mx-10 flex-1">
         <SearchInput />
       </div>
+      <TopBar
+        categories={categories.filter(
+          (category) => category.collections.length > 0,
+        )}
+      />
       <div className="ml-5 mt-4 h-screen">
-        <CollectionsList title="Карточки" items={collections} />
+        {categories.map(
+          (category) =>
+            category.collections.length > 0 && (
+              <CollectionsList
+                key={category.id}
+                title={category.name}
+                categoryId={category.id}
+                items={category.collections}
+              />
+            ),
+        )}
       </div>
     </div>
   );

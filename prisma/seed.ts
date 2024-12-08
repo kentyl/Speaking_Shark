@@ -1,6 +1,6 @@
 import { prisma } from "./prisma-client";
 import { hashSync } from "bcrypt";
-import { card } from "./constants";
+import { card, collections, categories } from "./constants";
 
 async function up() {
   await prisma.user.createMany({
@@ -20,45 +20,24 @@ async function up() {
     ],
   });
 
-  await prisma.card.createMany({
-    data: card,
-  });
-
-  const collection1 = await prisma.collection.create({
-    data: {
-      name: "1 theme",
-      card: {
-        connect: card.slice(0, 15),
-      },
-    },
-  });
-
-  const collection2 = await prisma.collection.create({
-    data: {
-      name: "2 theme",
-      card: {
-        connect: card.slice(15, 18),
-      },
-    },
-  });
-
-  const collection3 = await prisma.collection.create({
-    data: {
-      name: "3 theme",
-      card: {
-        connect: card.slice(18, 21),
-      },
-    },
+  await prisma.category.createMany({
+    data: categories,
   });
 
   await prisma.collection.createMany({
-    data: [collection1, collection2, collection3],
+    data: collections,
+  });
+
+  await prisma.card.createMany({
+    data: card,
   });
 }
+
 async function down() {
   await prisma.$executeRaw`TRUNCATE TABLE "User" RESTART IDENTITY CASCADE`;
   await prisma.$executeRaw`TRUNCATE TABLE "card" RESTART IDENTITY CASCADE`;
   await prisma.$executeRaw`TRUNCATE TABLE "collection" RESTART IDENTITY CASCADE`;
+  await prisma.$executeRaw`TRUNCATE TABLE "category" RESTART IDENTITY CASCADE`;
 }
 
 async function main() {
