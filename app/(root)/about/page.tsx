@@ -40,7 +40,7 @@ export default function About() {
 
         {/* Кнопка VK */}
         <a
-          href="https://vk.com/kentyl"
+          href="https://vk.com/hitera_it"
           target="_blank"
           rel="noopener noreferrer"
           className="transition-transform hover:scale-105"
