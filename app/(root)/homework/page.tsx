@@ -6,18 +6,18 @@ export default function Homework() {
 
   const tests = [
     {
-      name: "Тест по английскому",
+      name: "Д/з по английскому языку",
       url: "https://docs.google.com/forms/d/e/1FAIpQLSesMqlVhdaKKqX-tDn961Qgm1SAEgwdJLgt1a7hYpjfe2XDKg/viewform?usp=dialog",
     },
     {
-      name: "Тест по деловым коммуникациям",
-      url: "https://docs.google.com/forms/d/e/1FAIpQLScBxyqYZfLnCIlvOyxLnsqQ6HjOEFiyz77/viewform?usp=dialog",
+      name: "Тест на тему: Conditionals",
+      url: "https://docs.google.com/forms/d/e/1FAIpQLSfqUb_P3HEFyhEmx1gYkTTvKglvXAzSOTXQcmSqukAWRLXgSQ/viewform?usp=dialog",
     },
   ];
 
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center bg-gray-100 p-4">
-      <h1 className="mb-6 text-center text-3xl font-bold">
+    <div className="flex min-h-screen flex-col items-center justify-center rounded-2xl bg-gradient-to-br from-blue-300 via-blue-200 to-blue-100 p-4">
+      <h1 className="mb-6 text-center text-4xl font-bold text-gray-800 drop-shadow-md">
         Актуальные задания
       </h1>
 
@@ -26,7 +26,7 @@ export default function Homework() {
         {tests.map((test, index) => (
           <button
             key={index}
-            className="text-black-600 rounded border-2 border-black bg-gray-200 px-4 py-2 font-bold hover:bg-gray-300 "
+            className="rounded-lg border-2 border-gray-700 bg-white px-6 py-3 text-lg font-semibold text-gray-800 shadow-md transition-all hover:bg-gray-300 hover:shadow-xl"
             onClick={() => setSelectedTest(test.url)}
           >
             {test.name}
@@ -36,12 +36,12 @@ export default function Homework() {
 
       {/* Модальное окно */}
       {selectedTest && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-          <div className="relative h-[80vh] w-full max-w-4xl rounded-lg bg-white shadow-lg">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 transition-opacity">
+          <div className="relative h-[80vh] w-full max-w-4xl rounded-xl bg-white p-4 shadow-xl">
             {/* Кнопка закрыть */}
             <button
               onClick={() => setSelectedTest(null)}
-              className="absolute right-2 top-2 flex size-8 items-center justify-center rounded-full bg-gray-300 transition hover:bg-gray-400"
+              className="absolute right-4 top-4 flex size-10 items-center justify-center rounded-full bg-gray-200 text-gray-600 transition hover:bg-gray-300 hover:text-gray-900"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -49,7 +49,7 @@ export default function Homework() {
                 viewBox="0 0 24 24"
                 strokeWidth={2}
                 stroke="currentColor"
-                className="size-4 text-gray-700"
+                className="size-5"
               >
                 <path
                   strokeLinecap="round"
@@ -66,7 +66,6 @@ export default function Homework() {
               height="100%"
               className="rounded-lg"
               title="Homework Test"
-              style={{ backgroundColor: "white" }}
             >
               Загрузка...
             </iframe>

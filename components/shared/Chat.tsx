@@ -119,7 +119,7 @@ const Chat: React.FC = () => {
         <button
           onClick={sendMessage}
           disabled={isLoading}
-          className={`ml-3 flex size-10 items-center justify-center rounded-full bg-blue-500 text-white ${
+          className={`ml-3 flex size-10 items-center justify-center rounded-full bg-blue-500 text-white hover:shadow-xl ${
             isLoading ? "cursor-not-allowed bg-blue-300" : "hover:bg-blue-600"
           }`}
         >

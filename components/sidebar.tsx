@@ -10,6 +10,13 @@ const Sidebar = () => {
 
   return (
     <aside className={"sidebar"}>
+      <Image
+        src="/assets/img/vetka.png"
+        alt="preview"
+        className="left-0 top-0 w-full rounded-lg"
+        width={300}
+        height={229}
+      />
       <nav className={"sidebar-nav"}>
         <ul className={"flex flex-1 flex-col gap-6"}>
           {navItems.map(({ url, name, icon }) => (

@@ -10,7 +10,7 @@ interface Props {
 export const Card: React.FC<Props> = ({ id, en_w, ru_w, className }) => {
   return (
     <div
-      className={`relative flex aspect-[3/4.5] rounded-lg border bg-teal-50 p-6 shadow-md transition-shadow hover:shadow-lg sm:p-8 ${className}`}
+      className={`relative flex aspect-[3/4.5] rounded-lg border bg-teal-50 p-6 shadow-md transition-shadow hover:shadow-2xl sm:p-8 ${className}`}
     >
       {/* Номер карточки */}
       <div className="absolute left-2 top-2 text-xs font-bold text-teal-700 sm:text-sm">

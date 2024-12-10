@@ -12,9 +12,9 @@ export const CollectionCard: React.FC<Props> = ({ id, name, className }) => {
   return (
     <div className={className}>
       <Link href={`/cards/${id}`}>
-        <div className="relative w-full max-w-sm overflow-hidden rounded-lg bg-blue-200 p-4 sm:p-3 md:p-2">
+        <div className="relative w-full max-w-sm overflow-hidden rounded-lg bg-blue-200 p-4 hover:shadow-2xl sm:p-3 md:p-2">
           {/* Соотношение сторон */}
-          <div className="flex aspect-[3/4.5] items-center justify-center rounded-lg bg-blue-200">
+          <div className="flex aspect-[3/4.5] items-center justify-center overflow-hidden rounded-lg bg-blue-200">
             <Title
               text={name}
               size="sm"
