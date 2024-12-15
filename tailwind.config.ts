@@ -96,9 +96,15 @@ const config: Config = {
             opacity: "0",
           },
         },
+        spin: {
+          "0%": { transform: "rotate(0deg)" },
+          "100%": { transform: "rotate(360deg)" },
+        },
       },
+
       animation: {
         "caret-blink": "caret-blink 1.25s ease-out infinite",
+        spin: "spin 1s linear infinite",
       },
     },
   },
