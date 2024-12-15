@@ -52,8 +52,13 @@ export const CardsList: React.FC<Props> = ({ title, items, className }) => {
           "grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-[40px]",
         )}
       >
-        {items.map((card) => (
-          <Card key={card.id} id={card.id} ru_w={card.ru_w} en_w={card.en_w} />
+        {items.map((card, index) => (
+          <Card
+            key={index + 1} // Используем порядковый номер как ключ
+            id={index + 1} // Порядковый номер вместо card.id
+            ru_w={card.ru_w}
+            en_w={card.en_w}
+          />
         ))}
       </div>
 

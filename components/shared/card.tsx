@@ -14,7 +14,7 @@ export const Card: React.FC<Props> = ({ id, en_w, ru_w, className }) => {
     >
       {/* Номер карточки */}
       <div className="absolute left-2 top-2 text-xs font-bold text-teal-700 sm:text-sm">
-        {id + 1}
+        {id}
       </div>
 
       <div className="w-full cursor-pointer overflow-hidden">

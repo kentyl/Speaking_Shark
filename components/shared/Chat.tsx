@@ -2,6 +2,9 @@
 
 import React, { useState } from "react";
 import axios from "axios";
+import Link from "next/link";
+import Image from "next/image";
+import Modal from "@/components/shared/chatModal";
 
 const Chat: React.FC = () => {
   const [message, setMessage] = useState<string>("");
@@ -11,6 +14,10 @@ const Chat: React.FC = () => {
   const [isHistoryEnabled, setIsHistoryEnabled] = useState<boolean>(false);
   const [model, setModel] = useState<string>("gpt-3.5-turbo"); // Модель по умолчанию
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const handleOpenModal = () => setIsModalOpen(true);
+  const handleCloseModal = () => setIsModalOpen(false);
 
   const sendMessage = async () => {
     if (!message.trim()) return;
@@ -72,7 +79,22 @@ const Chat: React.FC = () => {
     <div className="flex h-full flex-col rounded-lg bg-gray-300 shadow-lg">
       {/* Информация о модели и истории */}
       <div className="p-4 text-center text-sm font-medium text-gray-700">
-        <div>Используемая модель: {model}</div>
+        <div className="flex items-center justify-center gap-2">
+          <span>Используемая модель: {model}</span>
+          <Link
+            href="#"
+            className="relative size-5 cursor-pointer"
+            onClick={handleOpenModal}
+          >
+            <Image
+              src="/assets/img/about.png"
+              alt="logo"
+              height={20}
+              width={20}
+            />
+          </Link>
+          <Modal isOpen={isModalOpen} onClose={handleCloseModal} />
+        </div>
         {isHistoryEnabled && (
           <div className="text-sm text-gray-700">История активна</div>
         )}
