@@ -2,6 +2,7 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
+
 import {
   Sheet,
   SheetContent,
@@ -13,11 +14,7 @@ import { navItems } from "@/constants";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 
-const MobileNavigation = ({
-  userData,
-}: {
-  userData: { userName?: string; userId?: string };
-}) => {
+const MobileNavigation = () => {
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
 
@@ -32,6 +29,7 @@ const MobileNavigation = ({
         />
       </Link>
 
+      {/* Текст */}
       <p className="flex-1 text-center text-lg font-semibold italic text-cyan-600">
         Speaking Shark - learn with us!
       </p>
@@ -55,14 +53,10 @@ const MobileNavigation = ({
                 height={44}
                 className="header-user-avatar"
               />
-              {userData.userName && userData.userId ? (
-                <div>
-                  <p className="subtitle-2 capitalize">{userData.userName}</p>
-                  <p className="caption">ID: {userData.userId}</p>
-                </div>
-              ) : (
-                <p className="subtitle-2 capitalize">Welcome!</p>
-              )}
+              <div className="sm:hidden lg:block">
+                <p className="subtitle-2 capitalize">userName</p>
+                <p className="caption">email</p>
+              </div>
             </div>
             <Separator className="mb-4 bg-light-200/20" />
           </SheetTitle>
@@ -73,7 +67,7 @@ const MobileNavigation = ({
                   key={name}
                   href={url}
                   className={"lg:w-full"}
-                  onClick={() => setOpen(false)}
+                  onClick={() => setOpen(false)} // Закрытие меню при клике
                 >
                   <li
                     className={cn(
