@@ -5,7 +5,11 @@ import { navItems } from "@/constants";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 
-const Sidebar = () => {
+const Sidebar = ({
+  userData,
+}: {
+  userData: { userName?: string; userId?: string };
+}) => {
   const pathname = usePathname();
 
   return (
@@ -27,36 +31,28 @@ const Sidebar = () => {
                   pathname === url && "shad-active",
                 )}
               >
-                <Image
-                  src={icon}
-                  alt={name}
-                  width={24}
-                  height={24}
-                  /* иконка горит только, когда активна
-                  className={cn(
-                    "nav-icon",
-                    pathname === url && "nav-icon-active",
-                  )} */
-                />
+                <Image src={icon} alt={name} width={24} height={24} />
                 <p className="hidden lg:block">{name}</p>
               </li>
             </Link>
           ))}
         </ul>
       </nav>
-      <div className="sidebar-user-info">
-        <Image
-          src="/assets/img/user_avatar.png"
-          alt="avatar"
-          width={44}
-          height={44}
-          className="sidebar-user-avatar"
-        />
-        <div className="hidden lg:block">
-          <p className="subtitle-2 capitalize">userName</p>
-          <p className="caption">email</p>
+      {userData.userName && userData.userId ? (
+        <div className="sidebar-user-info">
+          <Image
+            src="/assets/img/user_avatar.png"
+            alt="avatar"
+            width={44}
+            height={44}
+            className="sidebar-user-avatar"
+          />
+          <div className="hidden lg:block">
+            <p className="subtitle-2 capitalize">{userData.userName}</p>
+            <p className="caption">ID: {userData.userId}</p>
+          </div>
         </div>
-      </div>
+      ) : null}
     </aside>
   );
 };
