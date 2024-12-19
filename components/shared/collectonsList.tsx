@@ -16,7 +16,6 @@ interface Props {
 export const CollectionsList: React.FC<Props> = ({
   title,
   items,
-  categoryId,
   className,
   onCardClick,
 }) => {
