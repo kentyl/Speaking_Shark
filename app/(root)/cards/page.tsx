@@ -1,11 +1,17 @@
 import React from "react";
-import { CollectionsList, SearchInput, TopBar } from "@/components/shared";
+import { SearchInput, TopBar } from "@/components/shared";
 import { prisma } from "@/prisma/prisma-client";
+import ClientComponent from "./client-component"; // Клиентский компонент
 
-export default async function CollectionsPage() {
-  const categories = await prisma.category.findMany({
+const fetchCategories = async () => {
+  return prisma.category.findMany({
     include: { collections: true },
   });
+};
+
+export default async function CollectionsPage() {
+  const categories = await fetchCategories();
+
   return (
     <div>
       <div className="mx-10 flex-1">
@@ -20,7 +26,7 @@ export default async function CollectionsPage() {
         {categories.map(
           (category) =>
             category.collections.length > 0 && (
-              <CollectionsList
+              <ClientComponent
                 key={category.id}
                 title={category.name}
                 categoryId={category.id}

@@ -9,7 +9,7 @@ const Sidebar = () => {
   const pathname = usePathname();
 
   return (
-    <aside className={"sidebar"}>
+    <aside className={"sidebar min-w-[90px]"}>
       <Image
         src="/assets/img/vetka.png"
         alt="preview"
